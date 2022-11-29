@@ -2,11 +2,14 @@ package br.com.treinaweb.twprojetos.entidades;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -32,6 +35,10 @@ public class Cliente {
     @Column(name = "data_nascimento", nullable = false)
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate dataNascimento;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id_fk", nullable = false)
+    private Endereco endereco;
 
     public Long getId() {
         return id;
@@ -80,6 +87,15 @@ public class Cliente {
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -141,6 +157,8 @@ public class Cliente {
         return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + ", email=" + email
                 + ", dataNascimento=" + dataNascimento + "]";
     }
+
+
 
     
     
