@@ -4,12 +4,15 @@ import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import net.bytebuddy.dynamic.TypeResolutionStrategy.Lazy;
 
 @MappedSuperclass
 public abstract class Pessoa extends Entidade {
@@ -30,7 +33,7 @@ public abstract class Pessoa extends Entidade {
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate dataNascimento;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "endereco_id_fk", nullable = false)
     private Endereco endereco;
 
